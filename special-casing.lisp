@@ -129,7 +129,7 @@
                          (write-string ,(case-upper case) ,stream)))
                      casing)
            (t
-            (write-char (code-char ,code) ,stream))))))
+            (write-char (char-upcase (code-char ,code)) ,stream))))))
 
   (defmacro downcase-turkic (string index start end stream casing)
     (declare (ignorable start end))
@@ -151,7 +151,7 @@
                              `((write-string ,(case-lower case) ,stream)))))
                      casing)
            (t
-            (write-char (code-char ,code) ,stream)))))))
+            (write-char (char-downcase (code-char ,code)) ,stream)))))))
 
 (macrolet ((build ()
              (let* ((id "tr")

@@ -127,7 +127,10 @@
            ,@(mapcar (lambda (case)
                        `((eql ,code ,(case-code case))
                          (write-string ,(case-upper case) ,stream)))
-                     casing)
+                     (remove-if (lambda (case)
+                                  (eql (code-char (case-code case))
+                                       (ignore-errors (character (case-upper case)))))
+                                casing))
            (t
             (write-char (char-upcase (code-char ,code)) ,stream))))))
 
@@ -149,7 +152,10 @@
                                                   (char ,string (1+ ,index))))))))
                          ,@(unless (emptyp (case-lower case))
                              `((write-string ,(case-lower case) ,stream)))))
-                     casing)
+                     (remove-if (lambda (case)
+                                  (eql (code-char (case-code case))
+                                       (ignore-errors (character (case-lower case)))))
+                                casing))
            (t
             (write-char (char-downcase (code-char ,code)) ,stream)))))))
 
